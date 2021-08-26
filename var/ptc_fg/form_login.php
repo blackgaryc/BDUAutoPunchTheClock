@@ -35,10 +35,10 @@ if (!isset($user['stu_id'])):
 </div>
 <script>
     $("#login-btn").click(function (){
-        if ($("#login-btn").html()==='Login'){
+        if ($('#login-btn').html()==='Login'){
             // $("#login-btn").button('dispose');
             // $("#login-btn").button('toggle');
-            $("#login-btn").text('Loading...');
+            $('#login-btn').text('Loading...');
             $.ajax({
                 url:'login',
                 type:'post',
@@ -46,7 +46,7 @@ if (!isset($user['stu_id'])):
                 data:"stu_id="+$('#stu_id').val()+'&passwd='+$('#passwd').val(),
                 dataType: "json",
                 success:function (result){
-                    $("#login-btn").button('toggle');
+                    $('#login-btn').button('toggle');
                     if(result.status===true){
                         window.location.replace(result.url);
                     }else {
