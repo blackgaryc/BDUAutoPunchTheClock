@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+//<<<<<<< HEAD
 define("PTC_ROOT_DIR",dirname(__FILE__));
 require_once "var/ptc_fg/bootstrap.php";
 //echo $_SERVER['REQUEST_URI'];
@@ -32,7 +32,7 @@ switch ($_SERVER['PATH_INFO']){
         break;
 }
 echo "</div></body>";
-=======
+//=======
 ?>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
