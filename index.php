@@ -1,11 +1,7 @@
 <?php
-//<<<<<<< HEAD
+
 define("PTC_ROOT_DIR",dirname(__FILE__));
 require_once "var/ptc_fg/bootstrap.php";
-//echo $_SERVER['REQUEST_URI'];
-//echo "<br>";
-//echo dirname($_SERVER['REQUEST_URI']);
-//echo "<br>";
 
 include_once 'var/ptc_fg/banner.php';
 echo "<body class='bg-secondary'><div  class='container'>";
