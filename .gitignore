@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 a.html
 a.http
 a.php
@@ -11,3 +12,7 @@ jsonss.txt
 json.txt
 ptc.config.php
 tmp
+=======
+/.idea/
+/.git/
+>>>>>>> ea2c3201b11728b7637748878afffd954b2372cb
