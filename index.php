@@ -47,6 +47,15 @@ switch ($_SERVER['PATH_INFO']){
         if(!isset($_COOKIE['token'])){
             echo "<script>alert(\"请先登录\");window.location.replace('login')</script>";
         }
+        ?>
+        <div class="jumbotron jumbotron-fluid  mt-4 rounded-lg   ">
+            <div class="container">
+                <h1 class="display-4">今日打卡计划：</h1>
+                <p class="lead">&nbsp;&nbsp;7:02 打卡 状态：<?php echo db_user_log_status_1($user['stu_id'])==0?'未完成':'已打卡'; ?></p>
+                <p class="lead">12:02 打卡 状态：<?php  echo db_user_log_status_2($user['stu_id'])==0?'未完成':'已打卡'; ?></p>
+            </div>
+        </div>
+<?php
         echo "用户主页:".$user['stu_id'];
         break;
     case '/login':
