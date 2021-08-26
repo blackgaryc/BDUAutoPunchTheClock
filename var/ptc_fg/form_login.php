@@ -35,34 +35,34 @@ if (!isset($user['stu_id'])):
 </div>
 <script>
     $("#login-btn").click(function (){
-        if ($('#login-btn').html()==='Login'){
-            // $("#login-btn").button('dispose');
-            // $("#login-btn").button('toggle');
-            $('#login-btn').text('Loading...');
-            $.ajax({
-                url:'login',
-                type:'post',
-                timeout:2000,
-                data:"stu_id="+$('#stu_id').val()+'&passwd='+$('#passwd').val(),
-                dataType: "json",
-                success:function (result){
-                    $('#login-btn').button('toggle');
-                    if(result.status===true){
-                        window.location.replace(result.url);
-                    }else {
-
-                        alert("帐号或者密码错误");
-                        $("#login-btn").text('Login');
-
-                    }
-                },
-                error: function(data) {
-                    // 请求失败函数
-                    alert("failed")
-                    $("#login-btn").button('toggle');
-                }
-            });
+        if ($('#login-btn').html() !== 'Login') {
+            return;
         }
+        $('#login-btn').text('Loading...');
+        $.ajax({
+            url: 'login',
+            type: 'post',
+            timeout: 2000,
+            data: "stu_id=" + $('#stu_id').val() + '&passwd=' + $('#passwd').val(),
+            dataType: "json",
+            success: function (result) {
+                $('#login-btn').button('toggle');
+                if (result.status === true) {
+                    window.location.replace(result.url);
+                } else {
+
+                    alert("帐号或者密码错误");
+                    $("#login-btn").text('Login');
+
+                }
+            },
+            error: function (data) {
+                // 请求失败函数
+                alert("failed")
+                $("#login-btn").text('Login');
+
+            }
+        });
     });
 </script>
 <?php
