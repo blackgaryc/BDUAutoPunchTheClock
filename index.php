@@ -1,6 +1,16 @@
 <?php
 
 define("PTC_ROOT_DIR",dirname(__FILE__));
+
+if(isset($_COOKIE['token'])){
+    print_r("checking cookie");
+}
+if (isset($_POST['stu_id']) and isset($_POST['passwd'])){
+    echo "checking login";
+    print_r($_POST['stu_id']);
+    return;
+}
+
 require_once "var/ptc_fg/bootstrap.php";
 include_once "ptc.config.php";
 include_once "var/ptc_bg/db_tool.php";
@@ -15,10 +25,7 @@ switch ($_SERVER['PATH_INFO']){
         echo "用户主页";
         break;
     case '/login':
-        if (isset($_POST['stu_id'])and isset($_POST['passwd'])){
-            echo "checking login";
-            return;
-        }
+
         include_once 'var/ptc_fg/form_login.php';
         break;
     case '/register':

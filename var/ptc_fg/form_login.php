@@ -9,7 +9,7 @@ if (!defined("PTC_ROOT_DIR"))
 <!--    <a href="#" class="btn btn-primary">Go somewhere</a>-->
 </div>
 <div class="m-2 p-3 rounded-lg shadow-lg bg-light  border border-dark">
-    <form onsubmit="">
+    <form>
         <h2 class="text-center ">PTC</h2>
         <div class="form-group">
             <label for="stu_id">学号：</label>
@@ -41,7 +41,7 @@ if (!defined("PTC_ROOT_DIR"))
                 url:'login',
                 type:'post',
                 timeout:2000,
-                data:"hello",
+                data:"stu_id="+$('#stu_id').val()+'&passwd='+$('#passwd').val(),
                 dataType: "json",
                 success:function (result){
                     alert(result);
