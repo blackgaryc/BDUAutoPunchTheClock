@@ -5,7 +5,8 @@
  * @param string $str
  * @return string 返回被单引号包裹的字符串
  */
-function str(string $str){
+function str(string $str): string
+{
     return "'$str'";
 }
 
@@ -24,19 +25,19 @@ function mysql_timestamp(int $time=null){
 function db_create_activation_code(){
     global $db_conn;
     global $user_data;
-    $res = $db_conn->insert_data2table(
+    return $db_conn->insert_data2table(
         ['activation_code' => str(RandString::randString(64)),
             'create_user' => str($user_data['username']),
             'timestamp_create' => mysql_timestamp()
         ], 'ptc_activation_code');
-    return $res;
 }
 
 /**
- * @param array $ret
+ * @param int $ptc_run_status
+ * @param string $message
  * @param int $email_send_status 0==failed 1==success
  * @return bool|mysqli_result
- * 向数据库中插入登录失败的记录
+ * 向数据库中记录打卡历史
  */
 function db_log_write_history_log(int $ptc_run_status, string $message, int $email_send_status=0){
     global $user_data;
@@ -48,7 +49,7 @@ function db_log_write_history_log(int $ptc_run_status, string $message, int $ema
         'ptc_run_time'=>mysql_timestamp(),
         'ptc_email_send_status'=>$email_send_status
     );
-    print_r($arr);
+//    print_r($arr);
     return $db_conn->insert_data2table($arr,'ptc_history_record');
 }
 
@@ -63,6 +64,15 @@ function db_user_get_inf(string $stu_id,string $to_get){
     return $res->fetch_array()[$to_get];
 }
 
-function db_user_login(string $user,string $passwd){
-//    $sql=
+function db_user_log_numbers(bool $time_today,int $run_type=1){
+    global $db_conn;
+    if ($time_today)
+        $ct=' where  ptc_run_time>='.mysql_timestamp(strtotime(date("Y-m-d"),time()));
+
+    if ($run_type==1 or $run_type==0)
+        $rt="  and ptc_run_result=$run_type ";
+    $res=$db_conn->select_all_from_table('ptc_history_record',$ct.$rt);
+    $count=$res->num_rows;
+    mysqli_free_result($res);
+    return $count;
 }

@@ -2,7 +2,8 @@
 
 define("PTC_ROOT_DIR",dirname(__FILE__));
 require_once "var/ptc_fg/bootstrap.php";
-
+include_once "ptc.config.php";
+include_once "var/ptc_bg/db_tool.php";
 include_once 'var/ptc_fg/banner.php';
 echo "<body class='bg-secondary'><div  class='container'>";
 

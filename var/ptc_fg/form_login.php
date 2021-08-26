@@ -1,14 +1,10 @@
 <?php
 if (!defined("PTC_ROOT_DIR"))
     exit();
-//if (!is_null($_POST['stu_id']) and !is_null($_POST['passwd'])){
-//    echo "checking login";
-//    return;
-//}
 
 ?>
 <div class="card-body bg-light rounded-lg m-2 mt-4 mb-3">
-    <h5 class="card-title">今日<?php  ?>次，总计<?php  ?>次</h5>
+    <h5 class="card-title">今日<?php echo db_user_log_numbers(true,1);  ?>次，总计<?php echo db_user_log_numbers(false ,3); ?>次</h5>
     <p class="card-text">请如实提交打卡信息，因为本人错误提交导致的错误，与本平台无关。请重视关注平台反馈的邮件信息，如遇到错误，及时联系管理人员。</p>
 <!--    <a href="#" class="btn btn-primary">Go somewhere</a>-->
 </div>
