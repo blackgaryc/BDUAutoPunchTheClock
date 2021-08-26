@@ -33,21 +33,22 @@ function db_create_activation_code(){
 }
 
 /**
- * @param array $login_status
+ * @param array $ret
  * @param int $email_send_status 0==failed 1==success
  * @return bool|mysqli_result
  * 向数据库中插入登录失败的记录
  */
-function db_log_write_login_failed(array $login_status,int $email_send_status=0){
+function db_log_write_history_log(int $ptc_run_status, string $message, int $email_send_status=0){
     global $user_data;
     global $db_conn;
     $arr=array(
         'stu_id'=>str($user_data['username']),
-        'ptc_run_result'=>$login_status['status'],
-        'ptc_run_msg'=>str($login_status['msg']),
+        'ptc_run_result'=>$ptc_run_status,
+        'ptc_run_msg'=>str($message),
         'ptc_run_time'=>mysql_timestamp(),
         'ptc_email_send_status'=>$email_send_status
     );
+    print_r($arr);
     return $db_conn->insert_data2table($arr,'ptc_history_record');
 }
 

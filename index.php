@@ -32,6 +32,4 @@ switch ($_SERVER['PATH_INFO']){
         break;
 }
 echo "</div></body>";
-//=======
-?>
 

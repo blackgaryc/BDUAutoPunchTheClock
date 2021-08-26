@@ -231,7 +231,6 @@ function ptc_curl_get_lastone_array(string $cookies_full_path)
 
 function ptc_submit_string(string $data, string $cookie_file)
 {
-//    $url = "http://stu.bdu.edu.cn/content/student/temp/zzdk?_t_s_=" . time();
     $url = "http://stu.bdu.edu.cn/content/student/temp/zzdk";
     return extracted($url, $cookie_file, $data);
 }

@@ -44,7 +44,7 @@ class DB
         $key = substr($key, 0, strlen($key) - 1);
         $value = substr($value, 0, strlen($value) - 1);
         $sql = "insert into $table ($key) values ($value)";
-//        echo "2222$sql";
+        echo "$sql";
         return self::$db_conn->query($sql);
 
     }
