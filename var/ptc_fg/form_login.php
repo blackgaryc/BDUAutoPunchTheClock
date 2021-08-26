@@ -1,6 +1,7 @@
 <?php
 if (!defined("PTC_ROOT_DIR"))
     exit();
+if (!isset($user['stu_id'])):
 
 ?>
 <div class="card-body bg-light rounded-lg m-2 mt-4 mb-3">
@@ -34,8 +35,9 @@ if (!defined("PTC_ROOT_DIR"))
 </div>
 <script>
     $("#login-btn").click(function (){
-        if ($("#login-btn").html()==="Login"){
-            $("#login-btn").button('dispose');
+        if ($("#login-btn").html()==='Login'){
+            // $("#login-btn").button('dispose');
+            // $("#login-btn").button('toggle');
             $("#login-btn").text('Loading...');
             $.ajax({
                 url:'login',
@@ -44,12 +46,28 @@ if (!defined("PTC_ROOT_DIR"))
                 data:"stu_id="+$('#stu_id').val()+'&passwd='+$('#passwd').val(),
                 dataType: "json",
                 success:function (result){
-                    alert(result);
+                    $("#login-btn").button('toggle');
+                    if(result.status===true){
+                        window.location.replace(result.url);
+                    }else {
+
+                        alert("帐号或者密码错误");
+                        $("#login-btn").text('Login');
+
+                    }
                 },
                 error: function(data) {
                     // 请求失败函数
-                    console.log(data);
+                    alert("failed")
+                    $("#login-btn").button('toggle');
                 }
-            });}
+            });
+        }
     });
 </script>
+<?php
+endif;
+if (isset($user['stu_id'])):?>
+<h1>您已登录</h1>
+<?php
+endif;

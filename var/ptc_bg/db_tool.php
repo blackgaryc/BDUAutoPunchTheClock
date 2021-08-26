@@ -64,15 +64,46 @@ function db_user_get_inf(string $stu_id,string $to_get){
     return $res->fetch_array()[$to_get];
 }
 
-function db_user_log_numbers(bool $time_today,int $run_type=1){
+function db_user_log_numbers(bool $time_today,int $run_type=1): int
+{
     global $db_conn;
     if ($time_today)
         $ct=' where  ptc_run_time>='.mysql_timestamp(strtotime(date("Y-m-d"),time()));
-
     if ($run_type==1 or $run_type==0)
         $rt="  and ptc_run_result=$run_type ";
     $res=$db_conn->select_all_from_table('ptc_history_record',$ct.$rt);
     $count=$res->num_rows;
     mysqli_free_result($res);
     return $count;
+}
+
+function db_user_check_login(string $stu_id,string $passwd): bool
+{
+    global $db_conn;
+    $sql="select * from ptc_user where stu_id=? and stu_password=? ";
+    $stmt=$db_conn->getDbConn()->prepare($sql);
+    $stmt->bind_param('ss',$stu_id,$passwd);
+    $stmt->execute();
+    return $stmt->get_result()->num_rows==1;
+}
+function db_user_update_login_inf(string $stu_id,string $token){
+    global $db_conn;
+    $sql="update ptc_user SET token='$token' WHERE stu_id='$stu_id';";
+    $db_conn->getDbConn()->query($sql);
+}
+function db_user_get_by_token(string $token){
+    global $db_conn;
+    $res=$db_conn->select_all_from_table('ptc_user' , " where token='$token'; ");
+    if ($res->num_rows==1){
+        $u=$res->fetch_array();
+        mysqli_free_result($res);
+        return $u;
+    }
+    return false;
+}
+function ptc_user_generate_token(string $stu_id){
+    $db_max_len=32;
+    $len=rand(0,$db_max_len);
+    $token= substr(md5($stu_id).md5(time()),rand(0,$db_max_len-$len),$db_max_len-$len).RandString::randString($len);
+    return $token;
 }

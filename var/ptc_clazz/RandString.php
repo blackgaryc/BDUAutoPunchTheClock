@@ -6,7 +6,6 @@ class RandString
      * @var string
      */
     private static $chars = "0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP";
-    static $count = 0;
 
     private function __construct()
     {

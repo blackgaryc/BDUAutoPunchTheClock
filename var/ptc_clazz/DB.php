@@ -57,4 +57,13 @@ class DB
         $sql="select $str from $table $addition";
         return self::$db_conn->query($sql);
     }
+
+
+    /**
+     * @return mysqli|null
+     */
+    public function getDbConn(): ?mysqli
+    {
+        return self::$db_conn;
+    }
 }

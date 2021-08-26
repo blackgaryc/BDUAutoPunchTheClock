@@ -5,7 +5,7 @@
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://v2ry.top:3307/pr_v2ry_top</jdbc-url>
+      <jdbc-url>jdbc:mariadb://v2ry.top:3306/WEB_top_v2ry_pr</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
