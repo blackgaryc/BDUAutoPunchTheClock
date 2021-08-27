@@ -56,7 +56,7 @@ if (!isset($user['stu_id'])):
 
                 }
             },
-            error: function (data) {
+            error: function () {
                 // 请求失败函数
                 alert("failed")
                 $("#login-btn").text('Login');
@@ -69,5 +69,7 @@ if (!isset($user['stu_id'])):
 endif;
 if (isset($user['stu_id'])):?>
 <h1>您已登录</h1>
+    <a class="btn btn-primary" href="?logout=<?php echo time();?>" role="button">退出登录</a>
+
 <?php
 endif;

@@ -7,7 +7,9 @@ include_once "var/ptc_clazz/RandString.php";
 
 global $user;
 
-
+if (isset($_GET['logout'])){
+    setcookie('token','',time(),'/');
+}
 
 if(isset($_COOKIE['token'])){
     $user=db_user_get_by_token($_COOKIE['token']);

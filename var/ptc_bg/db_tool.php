@@ -159,3 +159,14 @@ function ptc_user_generate_token(string $stu_id): string
     $token = substr(md5($stu_id) . md5(time()), rand(0, $db_max_len - $len), $db_max_len - $len) . RandString::randString($len);
     return $token;
 }
+
+function db_write_data2post(string $ua,array $post,array $setting){
+    global $user_data;
+    $stuid=$user_data['username'];
+    $data_post=json_encode($post);
+    $ptc_setting=json_encode($setting);
+    $sql= "INSERT INTO ptc_data2post VALUES ('$stuid','$data_post','$ua','$ptc_setting') ON DUPLICATE KEY UPDATE stu_id='" . $stuid . "';";
+//    echo $sql;
+    global $db_conn;
+    $db_conn->getDbConn()->query($sql);
+}

@@ -6,7 +6,7 @@
 /**
  * 默认的USER-AGENT，即服务器识别你是什么浏览器的一种判别方法，更改此属性，可以让服务器识别连接终端的基本信息
  */
-const PTC_DEFAULT_HTTP_USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Mobile Safari/537.36";
+$PTC_DEFAULT_HTTP_USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Mobile Safari/537.36";
 /**
  * 默认的cookies存放地址,需要www-data有权限读写
  */
@@ -20,11 +20,12 @@ define('PTC_DEFAULT_COOKIES_DIR', dirname(__FILE__) . '/tmp');
  */
 function ptc_get_cookies_from_url(string $url, string $cookies_dir = null): ?string
 {
+    global $PTC_DEFAULT_HTTP_USER_AGENT;
     if (!$cookies_dir) {
         $cookies_dir = sys_get_temp_dir();
     }
     $cl = curl_init($url);
-    curl_setopt($cl, CURLOPT_USERAGENT, PTC_DEFAULT_HTTP_USER_AGENT);
+    curl_setopt($cl, CURLOPT_USERAGENT, $PTC_DEFAULT_HTTP_USER_AGENT);
     $cookies_filename = tempnam($cookies_dir, 'cookie_');
     curl_setopt($cl, CURLOPT_COOKIEJAR, $cookies_filename);
     curl_setopt($cl, CURLOPT_RETURNTRANSFER, 1);
@@ -65,9 +66,10 @@ function ptc_post_string2url(string $url, string $data, string $cookie_file = nu
  */
 function extracted(string $url, ?string $cookie_file, string $string_data)
 {
+    global $PTC_DEFAULT_HTTP_USER_AGENT;
     $cl = curl_init($url);
     curl_setopt($cl, CURLOPT_COOKIEFILE, $cookie_file);
-    curl_setopt($cl, CURLOPT_USERAGENT, PTC_DEFAULT_HTTP_USER_AGENT);
+    curl_setopt($cl, CURLOPT_USERAGENT, $PTC_DEFAULT_HTTP_USER_AGENT);
     curl_setopt($cl, CURLOPT_POST, true);
     curl_setopt($cl, CURLOPT_POSTFIELDS, $string_data);
     curl_setopt($cl, CURLOPT_RETURNTRANSFER, 1);
@@ -95,8 +97,9 @@ function ptc_password_encode(array $post_data): array
  */
 function ptc_get_data_from_server(string $url, string $cookie_path)
 {
+    global $PTC_DEFAULT_HTTP_USER_AGENT;
     $cl = curl_init($url);
-    curl_setopt($cl, CURLOPT_USERAGENT, PTC_DEFAULT_HTTP_USER_AGENT);
+    curl_setopt($cl, CURLOPT_USERAGENT, $PTC_DEFAULT_HTTP_USER_AGENT);
     curl_setopt($cl, CURLOPT_COOKIEFILE, $cookie_path);
     curl_setopt($cl, CURLOPT_RETURNTRANSFER, 1);
     $ret = curl_exec($cl);
@@ -109,7 +112,7 @@ function ptc_get_data_from_server(string $url, string $cookie_path)
  * @param string $cookies_full_path
  * @return array
  */
-function ptc_do_login(array $user, string $cookies_full_path)
+function ptc_do_login(array $user, string $cookies_full_path): array
 {
     if (strlen($user['password'] != 32)) {
         $user = ptc_password_encode($user);
@@ -145,7 +148,7 @@ function array2string_for_get(array $data)
  * @param $key
  * @return string 疫苗接种情况 文字转化
  */
-function ymjzmc($key)
+function ymjzmc($key): string
 {
     $data = [
         '未接种', '已接种未完成', '已接种已完成'
@@ -183,13 +186,13 @@ function jzdvalue($ptc_last_one)
     return $str;
 }
 
-function ptc_curl_get_lastone_array(string $cookies_full_path)
+function ptc_curl_get_lastone_array(string $cookies_full_path): array
 {
     //获取上次提交的数据并转化成本次要提交的数据
     $url = "http://stu.bdu.edu.cn/content/student/temp/zzdk/lastone?_t_s_=" . time();
     $ptc_last_one = ptc_get_data_from_server($url, $cookies_full_path);
     $ptc_last_one = json_decode($ptc_last_one);
-    $post_array = array(
+    return array(
         'dkdz' => $ptc_last_one->dkdz,
         'dkly' => $ptc_last_one->dkly,
         'dkd' => $ptc_last_one->dkd,
@@ -226,7 +229,6 @@ function ptc_curl_get_lastone_array(string $cookies_full_path)
         'operationType' => $ptc_last_one->operationType,
         'dm' => ''
     );
-    return $post_array;
 }
 
 function ptc_submit_string(string $data, string $cookie_file)
