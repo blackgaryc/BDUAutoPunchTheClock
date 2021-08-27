@@ -9,6 +9,7 @@ global $user;
 
 if (isset($_GET['logout'])){
     setcookie('token','',time(),'/');
+    echo "<script>window.location.refresh();</script>";
 }
 
 if(isset($_COOKIE['token'])){
@@ -53,8 +54,8 @@ switch ($_SERVER['PATH_INFO']){
         <div class="jumbotron jumbotron-fluid  mt-4 rounded-lg   ">
             <div class="container">
                 <h1 class="display-4">今日打卡计划：</h1>
-                <p class="lead">&nbsp;&nbsp;7:02 打卡 状态：<?php echo db_user_log_status_1($user['stu_id'])==0?'未完成':'已打卡'; ?></p>
-                <p class="lead">12:02 打卡 状态：<?php  echo db_user_log_status_2($user['stu_id'])==0?'未完成':'已打卡'; ?></p>
+                <p class="lead">上午打卡 状态：<?php $res=db_user_log_status_1($user['stu_id']); echo $res->num_rows==0?'未完成':'已打卡'; ?> 打卡时间: <?php if ($res->num_rows==1): echo $res->fetch_object()->ptc_run_time; endif; ?></p>
+                <p class="lead">下午打卡 状态：<?php $res=db_user_log_status_2($user['stu_id']); echo $res->num_rows==0?'未完成':'已打卡'; ?> 打卡时间: <?php if ($res->num_rows==1): echo $res->fetch_object()->ptc_run_time; endif; ?></p>
             </div>
         </div>
 <?php

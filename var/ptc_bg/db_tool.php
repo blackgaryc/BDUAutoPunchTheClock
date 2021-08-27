@@ -93,16 +93,10 @@ function db_user_log(string $stu_id, int $start, int $end)
 }
 
 function db_user_log_status_1(string $stu_id){
-    $res=db_user_log($stu_id,strtotime(date("Y-m-d 6:00"), time()),strtotime(date("Y-m-d 12:00"), time()));
-    $rows=$res->num_rows;
-    mysqli_free_result($res);
-    return $rows;
+    return db_user_log($stu_id,strtotime(date("Y-m-d 6:00"), time()),strtotime(date("Y-m-d 12:00"), time()));
 }
 function db_user_log_status_2(string $stu_id){
-    $res=db_user_log($stu_id,strtotime(date("Y-m-d 12:00"), time()),strtotime(date("Y-m-d 17:00"), time()));
-    $rows=$res->num_rows;
-    mysqli_free_result($res);
-    return $rows;
+    return db_user_log($stu_id,strtotime(date("Y-m-d 12:00"), time()),strtotime(date("Y-m-d 17:00"), time()));
 }
 
 
