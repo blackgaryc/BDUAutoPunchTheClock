@@ -9,7 +9,7 @@ global $user;
 
 if (isset($_GET['logout'])){
     setcookie('token','',time(),'/');
-    echo "<script>window.location.refresh();</script>";
+    echo "<script>window.location.reload();</script>";
 }
 
 if(isset($_COOKIE['token'])){
